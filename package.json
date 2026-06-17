@@ -5,9 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "postinstall": "prisma generate",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
+    "build": "prisma generate && prisma migrate deploy",
     "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "seed:movies": "node prisma/seed.js"
   },
   "keywords": [],

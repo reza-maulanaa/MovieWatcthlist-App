@@ -1,31 +1,31 @@
-import "../env.js";
 import express from "express";
+import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
 
-//Import Routes
-import moviesRoutes from "./routes/moviesRoutes.js";
+// Import Routes
+import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 
+config();
 connectDB();
 
 const app = express();
 
-// Body parsing middlewares
+// Body parsing middlwares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//API Routes
-app.use("/movies", moviesRoutes);
+// API Routes
+app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
 
-const PORT = 5001;
-const server = app.listen(PORT, () => {
-  console.log(`Server running on PORT ${PORT}`);
+const server = app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
+  console.log(`Server running on PORT ${process.env.PORT}`);
 });
 
-// Handle unhandled promise rejections
+// Handle unhandled promise rejections (e.g., database connection errors)
 process.on("unhandledRejection", (err) => {
   console.error("Unhandled Rejection:", err);
   server.close(async () => {

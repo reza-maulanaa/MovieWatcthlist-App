@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
@@ -54,11 +55,11 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/watchlist", watchlistRoutes);
 
-// Serve frontend static files in production
-if (process.env.NODE_ENV === "production") {
-  const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
+// Serve frontend static files
+const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
+if (fs.existsSync(frontendDist)) {
   app.use(express.static(frontendDist));
-  app.get("*", (req, res) => {
+  app.get("/{*splat}", (req, res) => {
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }

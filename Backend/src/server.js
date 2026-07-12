@@ -24,8 +24,10 @@ app.use((req, res, next) => {
     : ["http://localhost:5173", "http://localhost:3000"];
 
   const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
+  if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
+  } else if (!origin) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
   }
 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -48,9 +50,9 @@ app.get("/health", (req, res) => {
 });
 
 // API Routes
-app.use("/movies", movieRoutes);
-app.use("/auth", authRoutes);
-app.use("/watchlist", watchlistRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/watchlist", watchlistRoutes);
 
 // Serve frontend static files in production
 if (process.env.NODE_ENV === "production") {

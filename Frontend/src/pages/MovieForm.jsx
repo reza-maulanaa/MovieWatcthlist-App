@@ -200,9 +200,35 @@ export default function MovieForm() {
             type="url"
             value={form.posterUrl}
             onChange={(e) => setForm((f) => ({ ...f, posterUrl: e.target.value }))}
-            placeholder="https://example.com/poster.jpg"
+            placeholder="https://image.tmdb.org/t/p/w500/path.jpg"
             className="w-full px-4 py-2.5 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl text-white text-sm placeholder-[var(--color-text-secondary)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
           />
+          {form.posterUrl && (
+            <div className="mt-3">
+              <p className="text-xs text-[var(--color-text-secondary)] mb-2">Preview:</p>
+              <div className="w-32 aspect-[2/3] rounded-lg overflow-hidden bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                <img
+                  src={form.posterUrl}
+                  alt="Poster preview"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                    e.target.nextSibling.style.display = "flex";
+                  }}
+                  onLoad={(e) => {
+                    e.target.style.display = "block";
+                    e.target.nextSibling.style.display = "none";
+                  }}
+                />
+                <div className="w-full h-full items-center justify-center text-red-400 text-xs hidden">
+                  URL tidak valid
+                </div>
+              </div>
+            </div>
+          )}
+          <p className="text-xs text-[var(--color-text-secondary)] mt-1.5">
+            Gunakan direct image URL, contoh: https://image.tmdb.org/t/p/w500/xxxx.jpg
+          </p>
         </div>
 
         <div>

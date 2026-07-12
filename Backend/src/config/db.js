@@ -1,23 +1,22 @@
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import "dotenv/config";
 import pg from "pg";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const { Pool } = pg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
-
-import { PrismaPg } from "@prisma/adapter-pg";
 
 const adapter = new PrismaPg(pool);
 
 const prisma = new PrismaClient({
   adapter,
-  log:
-    process.env.NODE_ENV === "development"
-      ? ["query", "error", "warn"]
-      : ["error"],
+  log: process.env.NODE_ENV === "development"
+    ? ["query", "error", "warn"]
+    : ["error"],
 });
 
 const connectDB = async () => {

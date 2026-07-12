@@ -3,7 +3,7 @@ import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
 
 // Import Routes
-import movieRoutes from "./routes/movieRoutes.js";
+import movieRoutes from "./routes/moviesRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 

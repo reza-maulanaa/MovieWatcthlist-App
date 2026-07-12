@@ -55,7 +55,7 @@ const updateWatchlistItem = async (req, res) => {
   const { status, rating, notes } = req.body;
 
   // Find watchlist item and verify ownership
-  const watchlistItem = await prisma.watchlistItem.findUnique({
+  const watchlistItem = await prisma.watchListItem.findUnique({
     where: { id: req.params.id },
   });
 
@@ -77,7 +77,7 @@ const updateWatchlistItem = async (req, res) => {
   if (notes !== undefined) updateData.notes = notes;
 
   // Update watchlist item
-  const updatedItem = await prisma.watchlistItem.update({
+  const updatedItem = await prisma.watchListItem.update({
     where: { id: req.params.id },
     data: updateData,
   });
